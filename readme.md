@@ -48,12 +48,8 @@ Specify your licensing information here. For academic and open-source projects, 
 
 ### Contact
 
-For any additional information or inquiries, please reach out to [Insert Your Contact Information Here].
+For any additional information or inquiries, please reach out to jgomper1@jh.edu.
 
 ### Acknowledgments
 
 Special thanks to the providers of the datasets and to all collaborators who have contributed to this project.
-
----
-
-This readme provides a brief yet comprehensive guide to your project, including how to set it up, run it, and contribute to it. Adjust as necessary to fit the specifics of your project or institutional requirements.
