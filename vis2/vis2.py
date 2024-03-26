@@ -1,62 +1,61 @@
 import pandas as pd
 import plotly.express as px
 
-# Load the Excel file
+# Define the path to the Excel file containing investment data
 file_path = 'China-Global-Investment-Tracker-2023-Fall.xlsx'
 
-# Load sheet 4, assuming it contains the data of interest
+# Load the specific sheet from the Excel file that contains the data of interest
 sheet_4_df = pd.read_excel(file_path, sheet_name=3)
 
-# Adjust these indices based on where the actual data starts and the headers are located
+# Identify the header row and the starting row of the actual data
 header_row_index = 4
 data_start_row = header_row_index + 1
 
-# Extract column names and skip rows up to the header row
+# Read the data again to include column names and skip rows up to the data start row
 column_names = sheet_4_df.iloc[header_row_index]
 df = pd.read_excel(file_path, sheet_name=3, skiprows=data_start_row, names=column_names)
 
-# Map month names to their numeric values for datetime conversion
+# Convert month names to their corresponding numeric values for easier date handling
 month_to_num = {
     'January': 1, 'February': 2, 'March': 3, 'April': 4, 'May': 5, 'June': 6,
     'July': 7, 'August': 8, 'September': 9, 'October': 10, 'November': 11, 'December': 12
 }
 df['Month'] = df['Month'].map(month_to_num)
 
-# Create a 'Date' column from 'Year' and 'Month'
+# Construct a 'Date' column by combining 'Year' and 'Month', setting day as the first of the month
 df['Date'] = pd.to_datetime(df[['Year', 'Month']].assign(DAY=1))
 
-# Convert 'Quantity in Millions' to numeric
+# Ensure 'Quantity in Millions' column is treated as numeric, converting non-numeric to NaN
 df['Quantity in Millions'] = pd.to_numeric(df['Quantity in Millions'], errors='coerce')
 
-# Group by 'Date', 'Region', 'Sector', and sum up 'Quantity in Millions' for each group
+# Aggregate data by 'Date', 'Region', and 'Sector', summing up 'Quantity in Millions' for each group
 grouped_data = df.groupby(['Date', 'Region', 'Sector'], as_index=False)['Quantity in Millions'].sum()
 
-# Compute cumulative totals over time by region and sector
+# Calculate cumulative investment totals over time for each region and sector
 grouped_data['Cumulative Investment'] = grouped_data.groupby(['Region', 'Sector'])['Quantity in Millions'].cumsum()
 
-# Creating a full range of dates from min to max for our DataFrame
+# Generate a comprehensive range of dates to ensure continuous time series in the visualization
 all_dates = pd.date_range(start=grouped_data['Date'].min(), end=grouped_data['Date'].max(), freq='MS')
 
-# Creating a DataFrame with all combinations of Region, Sector, and Date
+# Create all possible combinations of Region, Sector, and Date to fill gaps in the time series
 all_combinations = pd.MultiIndex.from_product([grouped_data['Region'].unique(), grouped_data['Sector'].unique(), all_dates], names=['Region', 'Sector', 'Date']).to_frame(index=False)
 
-# Merging the full combinations with the original data
+# Merge these combinations with the grouped data, filling missing entries with zeros
 full_data = pd.merge(all_combinations, grouped_data, on=['Region', 'Sector', 'Date'], how='left')
 
-# Forward filling the 'Cumulative Investment' for missing months
+# Forward fill missing 'Cumulative Investment' values within each group to maintain continuity
 full_data['Cumulative Investment'] = full_data.groupby(['Region', 'Sector'])['Cumulative Investment'].ffill().fillna(0)
 
-# Ensure dates are formatted as strings for the animation frame
+# Convert dates to string format to use as animation frames in Plotly visualization
 full_data['Date_str'] = full_data['Date'].dt.strftime('%Y-%m')
 
-# Pivot the full_data to have regions as columns and the cumulative investment as values
+# Pivot data to format it for plotting: sectors vs. regions with cumulative investment values
 pivot_data = full_data.pivot_table(index=['Date_str', 'Sector'], columns='Region', values='Cumulative Investment', fill_value=0).reset_index()
 
-# Create a new DataFrame suitable for the plotting with Plotly This step is crucial to ensure we have one row per
-# 'Date_str' and 'Sector' with separate columns for each region's cumulative investment
+# Melt the pivoted data back to a long format suitable for Plotly's bar chart
 plot_data = pd.melt(pivot_data, id_vars=['Date_str', 'Sector'], var_name='Region', value_name='Cumulative Investment')
 
-# Create the interactive chart with a time slider
+# Generate an animated bar chart visualizing cumulative investment over time by region and sector
 fig = px.bar(
     plot_data,
     x='Region',
@@ -65,15 +64,14 @@ fig = px.bar(
     animation_frame='Date_str',
     title="Cumulative Investment Size by Region and Sector Over Time (in Millions)",
     category_orders={"Date_str": sorted(plot_data['Date_str'].unique())},
-    # Use a Plotly built-in palette or define a custom one with more variety:
     color_discrete_sequence=px.colors.qualitative.Alphabet
 )
 
-# Disable the default abbreviation
+# Customize y-axis format to display values without abbreviation
 fig.update_layout(yaxis_tickformat='')
 
-# Manually update the y-axis title to reflect the unit of measurement
+# Update y-axis label to clarify the unit of measurement is in millions
 fig.update_yaxes(title='Cumulative Investment (Millions)')
 
-# Display the figure
+# Display the animated visualization
 fig.show()

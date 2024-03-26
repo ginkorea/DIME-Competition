@@ -9,7 +9,7 @@ df_share_gdp = pd.read_excel(file_path, sheet_name="Share of GDP", skiprows=4)
 years = df_dollars.iloc[0]
 years = years[2:].astype(int)
 
-Countries = ["United States of America", "China", "Russia", "Taiwan", "Japan", "South Korea", "North Korea",
+Countries = ["United States of America", "China", "Russia", "Taiwan", "Japan", "Korea, South",
              "Australia"]
 
 # select only the countries of interest found in column at index 0
@@ -19,9 +19,6 @@ df_share_gdp_selected = df_share_gdp[df_share_gdp.iloc[:, 0].isin(Countries)]
 # drop column at index 1
 df_dollars_selected = df_dollars_selected.drop(df_dollars_selected.columns[1], axis=1)
 df_share_gdp_selected = df_share_gdp_selected.drop(df_share_gdp_selected.columns[1], axis=1)
-
-
-# Assuming df_dollars_selected and df_share_gdp_selected have been correctly processed to drop the notes column
 
 # Transpose the dataframes
 df_dollars_transposed = df_dollars_selected.set_index(df_dollars_selected.columns[0]).transpose()
@@ -61,13 +58,16 @@ df_plot.rename(columns={'index': 'Year'}, inplace=True)
 df_plot['USD'] = pd.to_numeric(df_plot['USD'], errors='coerce')
 df_plot['GDP'] = pd.to_numeric(df_plot['GDP'], errors='coerce')
 
-# Now, plot with the corrected data
+# Adjust 'USD' values from millions to billions for plotting
+df_plot['USD'] = df_plot['USD'] / 1000  # Convert millions to billions
+
+# Plot with the adjusted 'USD' data
 fig = px.scatter(df_plot,
                  x='GDP',
                  y='USD',
                  animation_frame='Year',
                  animation_group='Country',
-                 size='USD',  # This now correctly references a numeric series
+                 size='USD',
                  color='Country',
                  hover_name='Country',
                  size_max=60,
@@ -75,11 +75,17 @@ fig = px.scatter(df_plot,
                  range_x=[df_plot['GDP'].min(), df_plot['GDP'].max()],
                  range_y=[df_plot['USD'].min(), df_plot['USD'].max()])
 
-fig.update_layout(title='Military Expenditure as a Share of GDP Over Time',
-                  xaxis_title='Share of GDP (%)',
-                  yaxis_title='Military Expenditure (Current US$)',
-                  xaxis=dict(type='linear'),
-                  yaxis=dict(type='linear'))
+# Update layout with corrected axis titles and tick format for billions
+fig.update_layout(
+    title='Military Expenditure as a Share of GDP Over Time',
+    xaxis_title='Share of GDP (%)',
+    yaxis_title='Military Expenditure (Billions US$)',
+    xaxis=dict(type='linear'),
+    yaxis=dict(type='linear', tickformat=',.2f'),
+    yaxis_tickprefix='$',
+    yaxis_tickformat=',.2fB'  # Format y-axis ticks to show values in billions with two decimal places
+)
 
-# Show the figure
+# Show the figure with updated y-axis tick labels to accurately reflect billions
 fig.show()
+
