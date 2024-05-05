@@ -5,6 +5,8 @@ import pandas as pd
 from dash_bootstrap_components.themes import BOOTSTRAP
 from flask import Flask
 from milexpend import prepare_and_plot_data
+from investment_tracker import generate_cumulative_investment_chart
+import dash_bootstrap_components as dbc
 
 from datamanager import DataManager, TreeDiagram
 from mapper import CombinedMap
@@ -23,6 +25,7 @@ dataset_paths = {
     "construction": '~/Workspace/dv/final_project/final/data/Construction.csv',
     "investments": '~/Workspace/dv/final_project/final/data/Investments.csv',
     "military_expenditure": '~/Workspace/dv/final_project/final/data/SIPRI-Milex-data-1992-2023.xlsx',
+    'investment_tracker': '~/Workspace/dv/final_project/final/data/China-Global-Investment-Tracker-2023-Fall.xlsx'
 }
 
 # Initialize data managers
@@ -35,17 +38,26 @@ combined_map.preprocess_data()
 # Columns for the hierarchy selector in Sunburst view
 all_columns = ['Country', 'Sector', 'Subsector', 'Investor', 'Transaction Party', 'Region']
 
+# Define the navigation menu using dbc components for better styling
+navbar = dbc.Nav(
+    [
+        dbc.NavLink("China Investments and Construction Sunburst", href="/sunburst", active="exact"),
+        dbc.NavLink("Map of Chinese Investments and World Overseas Military Bases", href="/map", active="exact"),
+        dbc.NavLink("Military Expenditure Analysis", href="/military-expenditure", active="exact"),
+        dbc.NavLink("Investment Tracker Analysis", href="/investment-tracker", active="exact"),
+    ],
+    vertical=True,
+    pills=True,  # This option gives a highlight to active link
+    style={"font-size": "20px", "width": "250px"}  # Adjust width as per your layout requirement
+)
+
 app.layout = html.Div([
     dcc.Location(id='url', refresh=False),
-    html.Div([
-        dcc.Link('China Investments and Construction Sunburst', href='/sunburst'),
-        html.Br(),
-        dcc.Link('Map of Chinese Investments and World Overseas Military Bases', href='/map'),
-        html.Br(),
-        dcc.Link('Military Expenditure Analysis', href='/military-expenditure')
-    ], style={'padding': 10, 'fontSize': 24}),
-    html.Div(id='page-content')
-], style={'backgroundColor': '#303030', 'color': '#FFFFFF', 'height': '100vh'})
+    dbc.Row([
+        dbc.Col(navbar, width=2),  # Navigation sidebar taking 2 columns of the grid
+        dbc.Col(html.Div(id='page-content'), width=10)  # Content taking the rest 10 columns of the grid
+    ], style={'height': '100vh'}),  # Adjust height to viewport height
+], style={'backgroundColor': '#303030', 'color': '#FFFFFF'})
 
 
 @app.callback(Output('page-content', 'children'),
@@ -86,6 +98,12 @@ def display_page(pathname):
         fig = prepare_and_plot_data(dataset_paths['military_expenditure'])
         return html.Div([
             html.H1("Military Expenditure Analysis"),
+            dcc.Graph(figure=fig)
+        ])
+    elif pathname == '/investment-tracker':
+        fig = generate_cumulative_investment_chart(dataset_paths['investment_tracker'])
+        return html.Div([
+            html.H1("Investment Tracker Analysis"),
             dcc.Graph(figure=fig)
         ])
     else:
