@@ -1,0 +1,100 @@
+country1,country2,type,goal,organization
+China,Brazil,Strategic Partnership,Diplomatic,Bilateral
+China,France,Strategic Partnership,Diplomatic,Bilateral
+China,Canada,Strategic Partnership,Diplomatic,Bilateral
+China,India,Strategic Partnership,Diplomatic,Bilateral
+China,Pakistan,Strategic Partnership,Diplomatic,Bilateral
+China,Japan,Strategic Partnership,Diplomatic,Bilateral
+China,UK,Strategic Partnership,Diplomatic,Bilateral
+China,Saudi Arabia,Strategic Partnership,Diplomatic,Bilateral
+China,Egypt,Strategic Partnership,Diplomatic,Bilateral
+China,Iran,Strategic Partnership,Diplomatic,Bilateral
+China,South Africa,Strategic Partnership,Diplomatic,Bilateral
+China,South Korea,Strategic Partnership,Diplomatic,Bilateral
+China,North Korea,Strategic Partnership,Diplomatic,Bilateral
+China,Austria,Strategic Partnership,Diplomatic,EU
+China,Belgium,Strategic Partnership,Diplomatic,EU
+China,Bulgaria,Strategic Partnership,Diplomatic,EU
+China,Croatia,Strategic Partnership,Diplomatic,EU
+China,Cyprus,Strategic Partnership,Diplomatic,EU
+China,Czech Republic,Strategic Partnership,Diplomatic,EU
+China,Denmark,Strategic Partnership,Diplomatic,EU
+China,Estonia,Strategic Partnership,Diplomatic,EU
+China,Finland,Strategic Partnership,Diplomatic,EU
+China,France,Strategic Partnership,Diplomatic,EU
+China,Germany,Strategic Partnership,Diplomatic,EU
+China,Greece,Strategic Partnership,Diplomatic,EU
+China,Hungary,Strategic Partnership,Diplomatic,EU
+China,Ireland,Strategic Partnership,Diplomatic,EU
+China,Italy,Strategic Partnership,Diplomatic,EU
+China,Latvia,Strategic Partnership,Diplomatic,EU
+China,Lithuania,Strategic Partnership,Diplomatic,EU
+China,Luxembourg,Strategic Partnership,Diplomatic,EU
+China,Malta,Strategic Partnership,Diplomatic,EU
+China,Netherlands,Strategic Partnership,Diplomatic,EU
+China,Poland,Strategic Partnership,Diplomatic,EU
+China,Portugal,Strategic Partnership,Diplomatic,EU
+China,Romania,Strategic Partnership,Diplomatic,EU
+China,Slovakia,Strategic Partnership,Diplomatic,EU
+China,Slovenia,Strategic Partnership,Diplomatic,EU
+China,Spain,Strategic Partnership,Diplomatic,EU
+China,Sweden,Strategic Partnership,Diplomatic,EU
+China,Brunei,Strategic Partnership,Diplomatic,ASEAN
+China,Cambodia,Strategic Partnership,Diplomatic,ASEAN
+China,Indonesia,Strategic Partnership,Diplomatic,ASEAN
+China,Laos,Strategic Partnership,Diplomatic,ASEAN
+China,Malaysia,Strategic Partnership,Diplomatic,ASEAN
+China,Myanmar,Strategic Partnership,Diplomatic,ASEAN
+China,Philippines,Strategic Partnership,Diplomatic,ASEAN
+China,Singapore,Strategic Partnership,Diplomatic,ASEAN
+China,Thailand,Strategic Partnership,Diplomatic,ASEAN
+China,Vietnam,Strategic Partnership,Diplomatic,ASEAN
+US,Albania,Alliance,Military,NATO
+US,Belgium,Alliance,Military,NATO
+US,Bulgaria,Alliance,Military,NATO
+US,Canada,Alliance,Military,'NATO|Five Eyes'
+US,Croatia,Alliance,Military,NATO
+US,Czech Republic,Alliance,Military,NATO
+US,Denmark,Alliance,Military,NATO
+US,Estonia,Alliance,Military,NATO
+US,Finland,Alliance,Military,NATO
+US,France,Alliance,Military,NATO
+US,Germany,Alliance,Military,NATO
+US,Greece,Alliance,Military,NATO
+US,Hungary,Alliance,Military,NATO
+US,Iceland,Alliance,Military,NATO
+US,Italy,Alliance,Military,NATO
+US,Latvia,Alliance,Military,NATO
+US,Lithuania,Alliance,Military,NATO
+US,Luxembourg,Alliance,Military,NATO
+US,Montenegro,Alliance,Military,NATO
+US,Netherlands,Alliance,Military,NATO
+US,North Macedonia,Alliance,Military,NATO
+US,Norway,Alliance,Military,NATO
+US,Poland,Alliance,Military,NATO
+US,Portugal,Alliance,Military,NATO
+US,Romania,Alliance,Military,NATO
+US,Slovakia,Alliance,Military,NATO
+US,Slovenia,Alliance,Military,NATO
+US,Spain,Alliance,Military,NATO
+US,Sweden,Alliance,Military,NATO
+US,Turkey,Alliance,Military,NATO
+US,United Kingdom,Alliance,Military,NATO
+US,United States,Alliance,Military,NATO
+US,South Korea,Alliance,Military,Bilateral
+US,Japan,Alliance,Military,'Bilateral|Quad'
+US,Philippines,Alliance,Military,Bilateral
+US,Australia,Alliance,Military,'AUKUS|Quad|ANZUS|Five Eyes'
+US,New Zealand,Alliance,Military,'AUKUS|ANZUS|Five Eyes'
+US,United Kingdom,Alliance,Military,'AUKUS|NATO|Quad|Five Eyes'
+US,India,Strategic Partnership,Strategic,Quad
+China,Russia,Strategic Partnership,Strategic,SCO
+US,Brunei,Strategic Partnership,Diplomatic,ASEAN
+US,Indonesia,Strategic Partnership,Diplomatic,ASEAN
+US,Laos,Strategic Partnership,Diplomatic,ASEAN
+US,Malaysia,Strategic Partnership,Diplomatic,ASEAN
+US,Singapore,Strategic Partnership,Diplomatic,ASEAN
+US,Thailand,Alliance,Diplomatic|Military,ASEAN|Bilateral
+US,Vietnam,Strategic Partnership,Diplomatic,ASEAN
+US,Saudi Arabia,Strategic Partnership,Diplomatic,Bilateral
+
