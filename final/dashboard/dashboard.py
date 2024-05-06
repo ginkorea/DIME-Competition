@@ -10,6 +10,7 @@ import dash_bootstrap_components as dbc
 
 from datamanager import DataManager, TreeDiagram
 from mapper import CombinedMap
+from alliance_map import AllianceMap
 
 # Initializing the Flask server
 server = Flask(__name__)
@@ -25,7 +26,8 @@ dataset_paths = {
     "construction": '~/Workspace/dv/final_project/final/data/Construction.csv',
     "investments": '~/Workspace/dv/final_project/final/data/Investments.csv',
     "military_expenditure": '~/Workspace/dv/final_project/final/data/SIPRI-Milex-data-1992-2023.xlsx',
-    'investment_tracker': '~/Workspace/dv/final_project/final/data/China-Global-Investment-Tracker-2023-Fall.xlsx'
+    'investment_tracker': '~/Workspace/dv/final_project/final/data/China-Global-Investment-Tracker-2023-Fall.xlsx',
+    'alliances': '~/Workspace/dv/final_project/final/data/US_China_Alliances_Partnerships.csv'
 }
 
 # Initialize data managers
@@ -45,6 +47,7 @@ navbar = dbc.Nav(
         dbc.NavLink("Map of Chinese Investments and World Overseas Military Bases", href="/map", active="exact"),
         dbc.NavLink("Military Expenditure Analysis", href="/military-expenditure", active="exact"),
         dbc.NavLink("Investment Tracker Analysis", href="/investment-tracker", active="exact"),
+        dbc.NavLink("US-China Alliances and Partnerships", href="/alliances", active="exact")
     ],
     vertical=True,
     pills=True,  # This option gives a highlight to active link
@@ -104,6 +107,12 @@ def display_page(pathname):
         fig = generate_cumulative_investment_chart(dataset_paths['investment_tracker'])
         return html.Div([
             html.H1("Investment Tracker Analysis"),
+            dcc.Graph(figure=fig)
+        ])
+    elif pathname == '/alliances':
+        fig = AllianceMap(dataset_paths['alliances']).create_map()
+        return html.Div([
+            html.H1("Global Alliances Map"),
             dcc.Graph(figure=fig)
         ])
     else:
