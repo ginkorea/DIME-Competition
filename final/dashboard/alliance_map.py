@@ -13,7 +13,7 @@ from base_map import MilitaryBasesMap  # Ensure the base_map module is accessibl
 class AllianceMap:
     def __init__(self, dataset_path=None, bases_path=None):
         if dataset_path is None:
-            dataset_path = '~/Workspace/dv/final_project/final/data/US_China_Alliances_Partnerships.csv'
+            dataset_path = '/final/dashboard/data/US_China_Alliances_Partnerships.csv'
         self.df_alliances = pd.read_csv(dataset_path)
         # Determine overlaps
         self.df_alliances = self.df_alliances.groupby('country2').apply(self.aggregate_relations).reset_index()
@@ -51,18 +51,31 @@ class AllianceMap:
     def create_map(self):
         fig = go.Figure()
 
-        # Create the Choropleth map trace
+        # Map the categories to normalized positions on the colorscale
+        self.df_alliances['color_value'] = self.df_alliances['country1'].map({
+            'US': 0,  # Start of the scale
+            'Both': 0.5,  # Midpoint of the scale
+            'China': 1  # End of the scale
+        })
+
+        # Define a colorscale that maps these normalized positions to specific colors
+        custom_colorscale = [
+            [0, 'blue'],  # Color for 'US'
+            [0.5, 'purple'],  # Color for 'Both'
+            [1, 'red']  # Color for 'China'
+        ]
+
         alliance_trace = go.Choroplethmapbox(
             geojson=self.geojson,
             locations=self.df_alliances['country2'],
-            z=self.df_alliances['country1'].apply(self.assign_color),
-            colorscale=[(-1, 'blue'), (0, 'purple'), (1, 'red')],
+            z=self.df_alliances['color_value'],  # Numeric values mapped to colors
+            colorscale=custom_colorscale,
             text=self.df_alliances.apply(lambda x: f"{x['type']} / {x['goal']} / {x['organization']}", axis=1),
             marker_line_color='black',
             marker_line_width=0.5,
             colorbar=dict(
                 title='Type of Relation',
-                tickvals=[-1, 0, 1],
+                tickvals=[0, 0.5, 1],
                 ticktext=['US', 'Both', 'China']
             )
         )

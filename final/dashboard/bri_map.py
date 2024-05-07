@@ -9,11 +9,11 @@ class InvestmentChoroplethMap:
         self.summary_dataset2 = None
         self.summary_dataset1 = None
         if dataset1_path is None:
-            dataset1_path = '../data/Investments.csv'
+            dataset1_path = 'data/Investments.csv'
         if dataset2_path is None:
-            dataset2_path = '../data/Construction.csv'
+            dataset2_path = 'data/Construction.csv'
         if combined_path is None:
-            combined_path = '../data/Investments_and_construction.csv'
+            combined_path = 'data/Investments_and_construction.csv'
         self.df_dataset1 = pd.read_csv(dataset1_path)
         self.df_dataset2 = pd.read_csv(dataset2_path)
         self.df_combined = pd.read_csv(combined_path)

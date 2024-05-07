@@ -7,7 +7,7 @@ from key.key import mapbox_access_token
 class MilitaryBasesMap:
     def __init__(self, file_path=None):
         if file_path is None:
-            file_path = '../data/Overseas Military Bases.xlsx'
+            file_path = 'data/Overseas Military Bases.xlsx'
         self.file_path = file_path
         self.mapbox_access_token = mapbox_access_token
         self.df = pd.read_excel(file_path, sheet_name='Overseas military base')
