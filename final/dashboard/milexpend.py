@@ -1,6 +1,7 @@
 import pandas as pd
 import plotly.express as px
 
+
 def prepare_and_plot_data(file_path):
     df_dollars = pd.read_excel(file_path, sheet_name="Current US$", skiprows=4)
     df_share_gdp = pd.read_excel(file_path, sheet_name="Share of GDP", skiprows=4)
@@ -23,7 +24,8 @@ def prepare_and_plot_data(file_path):
     df_share_gdp_transposed.columns = [f"{col} - Share of GDP" for col in df_share_gdp_transposed.columns]
 
     combined_df = pd.concat([df_dollars_transposed, df_share_gdp_transposed], axis=1)
-    ordered_columns = sum([[dollar_col, gdp_col] for dollar_col, gdp_col in zip(df_dollars_transposed.columns, df_share_gdp_transposed.columns)], [])
+    ordered_columns = sum([[dollar_col, gdp_col] for dollar_col, gdp_col in
+                           zip(df_dollars_transposed.columns, df_share_gdp_transposed.columns)], [])
     combined_df = combined_df[ordered_columns]
 
     df_long = combined_df.reset_index().melt(id_vars='index', var_name='Country_Variable', value_name='Value')

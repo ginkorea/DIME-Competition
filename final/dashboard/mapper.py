@@ -1,8 +1,7 @@
-import json
 import pandas as pd
 import plotly.graph_objects as go
 import requests
-from base_map import MilitaryBasesMap  # Ensure the base_map module is accessible
+from base_map import MilitaryBasesMap
 
 
 class CombinedMap:

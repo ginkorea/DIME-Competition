@@ -1,13 +1,6 @@
-import json
 import pandas as pd
 import plotly.graph_objects as go
 import requests
-from dash import dcc, html
-from dash.dependencies import Input, Output
-import dash_bootstrap_components as dbc
-from flask import Flask
-from dash import Dash
-from base_map import MilitaryBasesMap  # Ensure the base_map module is accessible
 
 
 class AllianceMap:
